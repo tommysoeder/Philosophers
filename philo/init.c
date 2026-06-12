@@ -12,6 +12,17 @@
 
 #include "philo.h"
 
+static void	destroy_initialized_mutexes(t_table *table, int i)
+{
+	while (i > 0)
+	{
+		i--;
+		pthread_mutex_destroy(&table->forks[i]);
+	}
+	pthread_mutex_destroy(&table->state_mutex);
+	pthread_mutex_destroy(&table->print_mutex);
+}
+
 static int	init_mutexes(t_table *table)
 {
 	int	i;
@@ -28,13 +39,7 @@ static int	init_mutexes(t_table *table)
 	{
 		if (pthread_mutex_init(&table->forks[i], NULL) != 0)
 		{
-			while (i > 0)
-			{
-				i--;
-				pthread_mutex_destroy(&table->forks[i]);
-			}
-			pthread_mutex_destroy(&table->state_mutex);
-			pthread_mutex_destroy(&table->print_mutex);
+			destroy_initialized_mutexes(table, i);
 			return (1);
 		}
 		i++;

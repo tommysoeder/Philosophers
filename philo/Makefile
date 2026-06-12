@@ -4,7 +4,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 SRCS = main.c parse.c time.c init.c cleanup.c simulation.c routine.c print.c \
-	state.c monitor.c
+	state.c monitor.c actions.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

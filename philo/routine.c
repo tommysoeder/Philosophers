@@ -12,30 +12,6 @@
 
 #include "philo.h"
 
-static void	take_forks(t_philo *philo)
-{
-	if (philo->left_fork < philo->right_fork)
-	{
-		pthread_mutex_lock(philo->left_fork);
-		print_status(philo, "has taken a fork");
-		pthread_mutex_lock(philo->right_fork);
-		print_status(philo, "has taken a fork");
-	}
-	else
-	{
-		pthread_mutex_lock(philo->right_fork);
-		print_status(philo, "has taken a fork");
-		pthread_mutex_lock(philo->left_fork);
-		print_status(philo, "has taken a fork");
-	}
-}
-
-static void	drop_forks(t_philo *philo)
-{
-	pthread_mutex_unlock(philo->left_fork);
-	pthread_mutex_unlock(philo->right_fork);
-}
-
 static int	ate_enough(t_philo *philo)
 {
 	int	ate_enough;
@@ -73,19 +49,6 @@ static void	eat(t_philo *philo)
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&table->state_mutex);
 	drop_forks(philo);
-}
-
-static void	stagger_start(t_philo *philo)
-{
-	if (philo->id % 2 == 0)
-		usleep(1000);
-}
-
-static void	think(t_philo *philo)
-{
-	print_status(philo, "is thinking");
-	if (philo->table->philo_count % 2 != 0)
-		precise_sleep(philo->table, philo->table->time_to_eat * 9 / 10);
 }
 
 void	*philo_routine(void *arg)
