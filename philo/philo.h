@@ -35,17 +35,17 @@ typedef struct s_philo
 
 struct s_table
 {
-	int		philo_count;
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
-	int		must_eat;
-	long	start_time;
-	int		stop;
+	int				philo_count;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
+	int				must_eat;
+	long			start_time;
+	int				stop;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	state_mutex;
-	t_philo	*philos;
+	t_philo			*philos;
 };
 
 int		parse_args(int argc, char **argv, t_table *table);
