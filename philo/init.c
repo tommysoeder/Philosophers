@@ -52,7 +52,6 @@ static void	init_philos(t_table *table)
 	{
 		table->philos[i].id = i + 1;
 		table->philos[i].meals_eaten = 0;
-		table->philos[i].is_eating = 0;
 		table->philos[i].last_meal = 0;
 		table->philos[i].left_fork = &table->forks[i];
 		right_fork = (i + 1) % table->philo_count;

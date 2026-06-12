@@ -14,18 +14,18 @@
 
 static void	take_forks(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
+	if (philo->left_fork < philo->right_fork)
 	{
-		pthread_mutex_lock(philo->right_fork);
-		print_status(philo, "has taken a fork");
 		pthread_mutex_lock(philo->left_fork);
+		print_status(philo, "has taken a fork");
+		pthread_mutex_lock(philo->right_fork);
 		print_status(philo, "has taken a fork");
 	}
 	else
 	{
-		pthread_mutex_lock(philo->left_fork);
-		print_status(philo, "has taken a fork");
 		pthread_mutex_lock(philo->right_fork);
+		print_status(philo, "has taken a fork");
+		pthread_mutex_lock(philo->left_fork);
 		print_status(philo, "has taken a fork");
 	}
 }
@@ -66,12 +66,10 @@ static void	eat(t_philo *philo)
 	take_forks(philo);
 	pthread_mutex_lock(&table->state_mutex);
 	philo->last_meal = get_time_ms();
-	philo->is_eating = 1;
 	pthread_mutex_unlock(&table->state_mutex);
 	print_status(philo, "is eating");
 	precise_sleep(table, table->time_to_eat);
 	pthread_mutex_lock(&table->state_mutex);
-	philo->is_eating = 0;
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&table->state_mutex);
 	drop_forks(philo);
@@ -80,7 +78,14 @@ static void	eat(t_philo *philo)
 static void	stagger_start(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
-		precise_sleep(philo->table, philo->table->time_to_eat);
+		usleep(1000);
+}
+
+static void	think(t_philo *philo)
+{
+	print_status(philo, "is thinking");
+	if (philo->table->philo_count % 2 != 0)
+		precise_sleep(philo->table, philo->table->time_to_eat * 9 / 10);
 }
 
 void	*philo_routine(void *arg)
@@ -96,7 +101,7 @@ void	*philo_routine(void *arg)
 		eat(philo);
 		print_status(philo, "is sleeping");
 		precise_sleep(philo->table, philo->table->time_to_sleep);
-		print_status(philo, "is thinking");
+		think(philo);
 	}
 	return (NULL);
 }

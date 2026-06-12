@@ -16,15 +16,11 @@ static int	philo_died(t_philo *philo)
 {
 	long	now;
 	long	last_meal;
-	int		is_eating;
 
 	now = get_time_ms();
 	pthread_mutex_lock(&philo->table->state_mutex);
 	last_meal = philo->last_meal;
-	is_eating = philo->is_eating;
 	pthread_mutex_unlock(&philo->table->state_mutex);
-	if (is_eating && philo->table->time_to_die > philo->table->time_to_eat)
-		return (0);
 	return (now - last_meal >= philo->table->time_to_die);
 }
 

@@ -26,7 +26,6 @@ typedef struct s_philo
 {
 	int				id;
 	int				meals_eaten;
-	int				is_eating;
 	long			last_meal;
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;

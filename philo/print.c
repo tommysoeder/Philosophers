@@ -48,6 +48,7 @@ void	print_status(t_philo *philo, char *status)
 	char	buffer[128];
 	int		i;
 
+	pthread_mutex_lock(&philo->table->print_mutex);
 	if (!simulation_stopped(philo->table) || status[0] == 'd')
 	{
 		i = 0;
@@ -59,4 +60,5 @@ void	print_status(t_philo *philo, char *status)
 		buffer[i++] = '\n';
 		write(1, buffer, i);
 	}
+	pthread_mutex_unlock(&philo->table->print_mutex);
 }
