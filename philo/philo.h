@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tomamart <tomamart@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/12 12:39:07 by tomamart          #+#    #+#             */
+/*   Updated: 2026/06/12 12:53:33 by tomamart         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -37,7 +49,7 @@ struct s_table
 	t_philo	*philos;
 };
 
-int	parse_args(int argc, char **argv, t_table *table);
+int		parse_args(int argc, char **argv, t_table *table);
 long	get_time_ms(void);
 long	timestamp(t_table *table);
 void	precise_sleep(t_table *table, long duration_ms);
